@@ -1,0 +1,70 @@
+table,
+.dataTables_length,
+.dataTables_filter,
+.dataTables_info,
+#dataTable_paginate {
+  font-size: 14px;
+}
+
+.wrap-max-10 {
+  width: 10%;
+}
+
+.wrap-max-15 {
+  width: 15%;
+}
+
+.wrap-max-20 {
+  width: 20%;
+}
+
+.wrap-max-25 {
+  width: 25%;
+}
+
+.wrap-max-30 {
+  width: 30%;
+}
+
+.wrap-max-40 {
+  width: 40%;
+}
+
+.wrap-max-50 {
+  width: 50%;
+}
+
+.wrap-max-75 {
+  width: 75%;
+}
+
+.wrap-max-80 {
+  width: 80%;
+}
+
+td.dt-nowrap {
+  white-space: nowrap;
+}
+
+div#dataTable_paginate {
+  margin-top: 20px;
+}
+
+/*responsive*/
+@media only screen and (max-width: 420px) {
+  .wrap-max-10,
+  .wrap-max-15,
+  .wrap-max-20,
+  .wrap-max-25,
+  .wrap-max-30,
+  .wrap-max-40,
+  .wrap-max-50,
+  .wrap-max-75,
+  .wrap-max-80 {
+    width: auto;
+  }
+
+  td.dt-nowrap {
+    white-space: "";
+  }
+}
