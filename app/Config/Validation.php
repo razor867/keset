@@ -41,4 +41,78 @@ class Validation
 	//--------------------------------------------------------------------
 	// Rules
 	//--------------------------------------------------------------------
+	public $asset_types = [
+		'name' => [
+			'rules'  => 'required|regex_match[/^[\w\s ,.()&\/]+$/]',
+			'errors' => [
+				'required' => 'Wajib diisi!',
+			]
+		],
+	];
+
+	public $main_assets = [
+		'name' => [
+			'rules'  => 'required|regex_match[/^[\w\s ,.()&\/]+$/]',
+			'errors' => [
+				'required' => 'Wajib diisi!',
+			]
+		],
+		'type_asset' => [
+			'rules'  => 'required|numeric',
+			'errors' => [
+				'required' => 'Wajib diisi!',
+				'numeric' => 'Wajib angka',
+			]
+		],
+		'detail' => [
+			'rules'  => 'permit_empty|regex_match[/^[\w\s ,.()&\/]+$/]',
+		],
+		'total' => [
+			'rules'  => 'required|numeric',
+			'errors' => [
+				'required' => 'Wajib diisi!',
+				'numeric' => 'Wajib angka',
+			]
+		],
+		'price' => [
+			'rules'  => 'required|numeric',
+			'errors' => [
+				'required' => 'Wajib diisi!',
+				'numeric' => 'Wajib angka',
+			]
+		],
+	];
+
+	public $consumables = [
+		'name' => [
+			'rules'  => 'required|regex_match[/^[\w\s ,.()&\/]+$/]',
+			'errors' => [
+				'required' => 'Wajib diisi!',
+			]
+		],
+		'type_asset' => [
+			'rules'  => 'required|numeric',
+			'errors' => [
+				'required' => 'Wajib diisi!',
+				'numeric' => 'Wajib angka',
+			]
+		],
+		'detail' => [
+			'rules'  => 'permit_empty|regex_match[/^[\w\s ,.()&\/]+$/]',
+		],
+		'qty' => [
+			'rules'  => 'required|numeric',
+			'errors' => [
+				'required' => 'Wajib diisi!',
+				'numeric' => 'Wajib angka',
+			]
+		],
+		'price' => [
+			'rules'  => 'required|numeric',
+			'errors' => [
+				'required' => 'Wajib diisi!',
+				'numeric' => 'Wajib angka',
+			]
+		],
+	];
 }
