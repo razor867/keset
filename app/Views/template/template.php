@@ -135,6 +135,18 @@
                     <span>Users</span></a>
             </li>
 
+            <!-- <li class="nav-item <?= ($menu == 'permissions') ? 'active' : '' ?>">
+                <a class="nav-link" href="<?= base_url('permissions') ?>">
+                    <i class="fas fa-fw fa-exclamation-circle"></i>
+                    <span>Permissions</span></a>
+            </li>
+
+            <li class="nav-item <?= ($menu == 'user_permissions') ? 'active' : '' ?>">
+                <a class="nav-link" href="<?= base_url('user_permissions') ?>">
+                    <i class="fas fa-fw fa-user-slash"></i>
+                    <span>User Permissions</span></a>
+            </li> -->
+
             <!-- Nav Item - Charts -->
             <li class="nav-item <?= ($menu == 'profile') ? 'active' : '' ?>">
                 <a class="nav-link" href="<?= base_url('home/profile') ?>">
@@ -250,7 +262,7 @@
                     <!-- Page Heading -->
                     <h1 class="h3 mb-4 text-gray-800"><?= $title_page ?></h1>
                     <p><?= $content ?></p>
-
+                    <div class="info" info_data="<?= session()->getFlashdata('info') ?>"></div>
                     <?= $this->renderSection('content') ?>
                 </div>
                 <!-- /.container-fluid -->
@@ -310,6 +322,9 @@
 
     <!-- Custom scripts for all pages-->
     <script src="<?= base_url('js/sb-admin-2.min.js') ?>"></script>
+    <script>
+        const base_url = '<?= base_url() ?>';
+    </script>
     <?= $this->renderSection('js_custom') ?>
 
 </body>
