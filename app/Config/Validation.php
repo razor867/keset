@@ -115,4 +115,47 @@ class Validation
 			]
 		],
 	];
+
+	public $asset_purchase = [
+		'asset_id' => [
+			'rules'  => 'required|numeric',
+			'errors' => [
+				'required' => 'Wajib diisi!',
+				'numeric' => 'Wajib angka',
+			]
+		],
+		'total' => [
+			'rules'  => 'required|numeric',
+			'errors' => [
+				'required' => 'Wajib diisi!',
+				'numeric' => 'Wajib angka',
+			]
+		],
+		'price' => [
+			'rules'  => 'required|numeric',
+			'errors' => [
+				'required' => 'Wajib diisi!',
+				'numeric' => 'Wajib angka',
+			]
+		],
+		'total_price' => [
+			'rules'  => 'required|numeric',
+			'errors' => [
+				'required' => 'Wajib diisi!',
+				'numeric' => 'Wajib angka',
+			]
+		],
+		'seller' => [
+			'rules'  => 'required|regex_match[/^[\w\s ,.()&\/]+$/]',
+			'errors' => [
+				'required' => 'Wajib diisi!',
+			]
+		],
+		'date' => [
+			'rules'  => 'required|valid_date[Y-m-d]',
+			'errors' => [
+				'required' => 'Wajib diisi!',
+			]
+		],
+	];
 }

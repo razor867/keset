@@ -2,12 +2,13 @@ function deleteData(page, id) {
   let link = "";
   if (page == "_dat_asset_types") {
     link = base_url + "/utilities/delete_asset_types/" + id;
+  } else if (page == "_dat_asset_purchase") {
+    link = base_url + "/utilities/delete_asset_purchase/" + id;
   } else if (page == "_dat_main_assets") {
     link = base_url + "/assets/delete_main_assets/" + id;
   } else if (page == "_dat_consumables") {
     link = base_url + "/assets/delete_consumables/" + id;
   }
-
   Swal.fire({
     title: "Yakin hapus data ini?",
     text: "Kamu tidak akan melihatnya lagi!",
