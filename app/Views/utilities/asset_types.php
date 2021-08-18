@@ -26,7 +26,7 @@
     <div class="card-header py-3">
         <div class="row">
             <div class="col-md-4">
-                <h6 class="m-0 font-weight-bold text-primary">Asset Types</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Asset types data</h6>
             </div>
             <div class="col-md-8 mt-3">
                 <a class="btn btn-sm btn-primary float-right" href="<?= base_url('utilities/form_asset_types') ?>"><i class="fas fa-fw fa-plus"></i> Add</a>

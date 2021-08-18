@@ -26,7 +26,7 @@
     <div class="card-header py-3">
         <div class="row">
             <div class="col-md-4">
-                <h6 class="m-0 font-weight-bold text-primary">Consumables Data</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Consumables data</h6>
             </div>
             <div class="col-md-8 mt-3">
                 <a class="btn btn-sm btn-primary float-right" href="<?= base_url('assets/form_consumables') ?>"><i class="fas fa-fw fa-plus"></i> Add</a>

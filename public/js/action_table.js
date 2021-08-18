@@ -8,7 +8,12 @@ function deleteData(page, id) {
     link = base_url + "/assets/delete_main_assets/" + id;
   } else if (page == "_dat_consumables") {
     link = base_url + "/assets/delete_consumables/" + id;
+  } else if (page == "_dat_positions") {
+    link = base_url + "/utilities/delete_positions/" + id;
+  } else if (page == "_dat_departments") {
+    link = base_url + "/utilities/delete_departments/" + id;
   }
+
   Swal.fire({
     title: "Yakin hapus data ini?",
     text: "Kamu tidak akan melihatnya lagi!",

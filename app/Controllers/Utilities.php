@@ -5,6 +5,8 @@ namespace App\Controllers;
 use App\Models\M_Asset_purchase;
 use App\Models\M_Asset_types;
 use App\Models\M_Assets;
+use App\Models\M_Departments;
+use App\Models\M_Positions;
 use Irsyadulibad\DataTables\DataTables;
 
 class Utilities extends BaseController
@@ -13,6 +15,8 @@ class Utilities extends BaseController
     protected $m_asset_types;
     protected $m_assets;
     protected $m_purchase;
+    protected $m_positions;
+    protected $m_departments;
 
     public function __construct()
     {
@@ -20,6 +24,8 @@ class Utilities extends BaseController
         $this->m_asset_types = new M_Asset_types();
         $this->m_assets = new M_Assets();
         $this->m_purchase = new M_Asset_purchase();
+        $this->m_positions = new M_Positions();
+        $this->m_departments = new M_Departments();
     }
 
     public function index()
@@ -57,7 +63,7 @@ class Utilities extends BaseController
     public function positions()
     {
         $data['title_page'] = 'Positions';
-        $data['content'] = 'Data karyawan';
+        $data['content'] = 'Data jabatan di perusahaan';
         $data['menu'] = 'utilities';
         $data['submenu'] = 'utilities_positions';
         return view('utilities/positions', $data);
@@ -109,11 +115,47 @@ class Utilities extends BaseController
             ->make(true);
     }
 
+    public function listdata_positions()
+    {
+        return DataTables::use('position')
+            ->where(['deleted_at' => NULL])
+            ->select('name, id')
+            ->addColumn('action', function ($data) {
+                $button_action = '<a href="' . base_url('utilities/form_positions/' . $data->id) . '" class="btn btn-warning btn-sm" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                  </a>
+                                  <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="deleteData(\'_dat_positions\',\'' . $data->id . '\')" title="Delete">
+                                    <i class="fas fa-trash-alt"></i>
+                                  </a>';
+                return $button_action;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+    }
+
+    public function listdata_departments()
+    {
+        return DataTables::use('department')
+            ->where(['deleted_at' => NULL])
+            ->select('name, id')
+            ->addColumn('action', function ($data) {
+                $button_action = '<a href="' . base_url('utilities/form_departments/' . $data->id) . '" class="btn btn-warning btn-sm" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                  </a>
+                                  <a href="javascript:void(0)" class="btn btn-danger btn-sm" onclick="deleteData(\'_dat_departments\',\'' . $data->id . '\')" title="Delete">
+                                    <i class="fas fa-trash-alt"></i>
+                                  </a>';
+                return $button_action;
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+    }
+
     public function form_asset_types($id = '')
     {
         $data['title_page'] = ((empty($id)) ? 'Tambah' : 'Rubah') . ' Asset Types';
         $data['content'] = 'Form untuk ' . ((empty($id)) ? 'menambahkan' : 'merubah') . ' tipe aset';
-        $data['title_card'] = 'Form ' . ((empty($id)) ? 'add' : 'edit') . ' tipe aset';
+        $data['title_card'] = 'Form ' . ((empty($id)) ? 'add' : 'edit') . ' asset types';
         $data['menu'] = 'utilities';
         $data['submenu'] = 'utilities_asset_types';
         $data['back_url'] = base_url('utilities/asset_types');
@@ -147,7 +189,7 @@ class Utilities extends BaseController
     {
         $data['title_page'] = ((empty($id)) ? 'Tambah' : 'Rubah') . ' Asset Purchase';
         $data['content'] = 'Form untuk ' . ((empty($id)) ? 'menambahkan' : 'merubah') . ' data pembelian aset';
-        $data['title_card'] = 'Form ' . ((empty($id)) ? 'add' : 'edit') . ' data pembelian aset';
+        $data['title_card'] = 'Form ' . ((empty($id)) ? 'add' : 'edit') . ' asset purchase';
         $data['menu'] = 'utilities';
         $data['submenu'] = 'utilities_asset_purchase';
         $data['back_url'] = base_url('utilities/asset_purchase');
@@ -183,6 +225,74 @@ class Utilities extends BaseController
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         } else {
             return view('utilities/form/form_asset_purchase', $data);
+        }
+    }
+
+    public function form_positions($id = '')
+    {
+        $data['title_page'] = ((empty($id)) ? 'Tambah' : 'Rubah') . ' Positions';
+        $data['content'] = 'Form untuk ' . ((empty($id)) ? 'menambahkan' : 'merubah') . ' jabatan';
+        $data['title_card'] = 'Form ' . ((empty($id)) ? 'add' : 'edit') . ' positions';
+        $data['menu'] = 'utilities';
+        $data['submenu'] = 'utilities_positions';
+        $data['back_url'] = base_url('utilities/positions');
+        $data['action_url'] = base_url('utilities/save_positions/' . (empty($id) ? '' : $id));
+        $data['id'] = (empty($id)) ? 0 : $id;
+        $data['is_edit'] = false;
+        $data['validation'] = $this->validation;
+        $err = false;
+        if (!empty($id)) {
+            if (is_numeric($id)) {
+                $data['is_edit'] = true;
+                $exist = $this->m_positions->find($id);
+                if ($exist) {
+                    $data['name'] = $exist->name;
+                } else {
+                    $err = true;
+                }
+            } else {
+                $err = true;
+            }
+        }
+
+        if ($err) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        } else {
+            return view('utilities/form/form_positions', $data);
+        }
+    }
+
+    public function form_departments($id = '')
+    {
+        $data['title_page'] = ((empty($id)) ? 'Tambah' : 'Rubah') . ' Departments';
+        $data['content'] = 'Form untuk ' . ((empty($id)) ? 'menambahkan' : 'merubah') . ' departemen';
+        $data['title_card'] = 'Form ' . ((empty($id)) ? 'add' : 'edit') . ' departments';
+        $data['menu'] = 'utilities';
+        $data['submenu'] = 'utilities_departmentss';
+        $data['back_url'] = base_url('utilities/departments');
+        $data['action_url'] = base_url('utilities/save_departments/' . (empty($id) ? '' : $id));
+        $data['id'] = (empty($id)) ? 0 : $id;
+        $data['is_edit'] = false;
+        $data['validation'] = $this->validation;
+        $err = false;
+        if (!empty($id)) {
+            if (is_numeric($id)) {
+                $data['is_edit'] = true;
+                $exist = $this->m_departments->find($id);
+                if ($exist) {
+                    $data['name'] = $exist->name;
+                } else {
+                    $err = true;
+                }
+            } else {
+                $err = true;
+            }
+        }
+
+        if ($err) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        } else {
+            return view('utilities/form/form_departments', $data);
         }
     }
 
@@ -295,6 +405,84 @@ class Utilities extends BaseController
         }
     }
 
+    public function save_positions($id = '')
+    {
+        if (!$this->validate($this->validation->getRuleGroup('positions'))) {
+            session()->setFlashdata('info', (empty($id)) ? 'error_add' : 'error_edit');
+            return redirect()->to(base_url('utilities/form_positions/' . (empty($id) ? '' : $id)))->withInput();
+        }
+        $postData = $this->request->getPost();
+        $err = false;
+        $position_id = $postData['positions_id'];
+        if (!empty($position_id)) {
+            if (is_numeric($position_id)) {
+                $exist = $this->m_positions->find($position_id);
+                if ($exist) {
+                    $postData['updated_by'] = user_id();
+                    $this->m_positions->update($position_id, $postData);
+                    session()->setFlashdata('info', 'success_edit');
+                } else {
+                    session()->setFlashdata('info', 'error_edit');
+                }
+            } else {
+                $err = true;
+            }
+        } else {
+            if (is_numeric($position_id)) {
+                $postData['created_by'] = user_id();
+                $this->m_positions->insert($postData);
+                session()->setFlashdata('info', 'success_add');
+            } else {
+                $err = true;
+            }
+        }
+
+        if ($err) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        } else {
+            return redirect()->to(base_url('utilities/positions'));
+        }
+    }
+
+    public function save_departments($id = '')
+    {
+        if (!$this->validate($this->validation->getRuleGroup('departments'))) {
+            session()->setFlashdata('info', (empty($id)) ? 'error_add' : 'error_edit');
+            return redirect()->to(base_url('utilities/form_departments/' . (empty($id) ? '' : $id)))->withInput();
+        }
+        $postData = $this->request->getPost();
+        $err = false;
+        $department_id = $postData['departments_id'];
+        if (!empty($department_id)) {
+            if (is_numeric($department_id)) {
+                $exist = $this->m_departments->find($department_id);
+                if ($exist) {
+                    $postData['updated_by'] = user_id();
+                    $this->m_departments->update($department_id, $postData);
+                    session()->setFlashdata('info', 'success_edit');
+                } else {
+                    session()->setFlashdata('info', 'error_edit');
+                }
+            } else {
+                $err = true;
+            }
+        } else {
+            if (is_numeric($department_id)) {
+                $postData['created_by'] = user_id();
+                $this->m_departments->insert($postData);
+                session()->setFlashdata('info', 'success_add');
+            } else {
+                $err = true;
+            }
+        }
+
+        if ($err) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        } else {
+            return redirect()->to(base_url('utilities/departments'));
+        }
+    }
+
     public function delete_asset_types($id)
     {
         $err = false;
@@ -344,6 +532,58 @@ class Utilities extends BaseController
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         } else {
             return redirect()->to(base_url('utilities/asset_purchase'));
+        }
+    }
+
+    public function delete_positions($id)
+    {
+        $err = false;
+        if (!empty($id)) {
+            if (is_numeric($id)) {
+                $exist = $this->m_positions->find($id);
+                if ($exist) {
+                    $data['deleted_by'] = user_id();
+                    $this->m_positions->update($id, $data);
+                    $this->m_positions->delete($id);
+                    session()->setFlashdata('info', 'success_delete');
+                } else {
+                    session()->setFlashdata('info', 'error_delete');
+                }
+            } else {
+                $err = true;
+            }
+        }
+
+        if ($err) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        } else {
+            return redirect()->to(base_url('utilities/positions'));
+        }
+    }
+
+    public function delete_departments($id)
+    {
+        $err = false;
+        if (!empty($id)) {
+            if (is_numeric($id)) {
+                $exist = $this->m_departments->find($id);
+                if ($exist) {
+                    $data['deleted_by'] = user_id();
+                    $this->m_departments->update($id, $data);
+                    $this->m_departments->delete($id);
+                    session()->setFlashdata('info', 'success_delete');
+                } else {
+                    session()->setFlashdata('info', 'error_delete');
+                }
+            } else {
+                $err = true;
+            }
+        }
+
+        if ($err) {
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+        } else {
+            return redirect()->to(base_url('utilities/departments'));
         }
     }
 

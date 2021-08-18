@@ -158,4 +158,22 @@ class Validation
 			]
 		],
 	];
+
+	public $positions = [
+		'name' => [
+			'rules'  => 'required|regex_match[/^[\w\s ,.()&\/]+$/]',
+			'errors' => [
+				'required' => 'Wajib diisi!',
+			]
+		],
+	];
+
+	public $departments = [
+		'name' => [
+			'rules'  => 'required|regex_match[/^[\w\s ,.()&\/]+$/]',
+			'errors' => [
+				'required' => 'Wajib diisi!',
+			]
+		],
+	];
 }
