@@ -12,6 +12,8 @@ function deleteData(page, id) {
     link = base_url + "/utilities/delete_positions/" + id;
   } else if (page == "_dat_departments") {
     link = base_url + "/utilities/delete_departments/" + id;
+  } else if (page == "_dat_employees") {
+    link = base_url + "/utilities/delete_employees/" + id;
   }
 
   Swal.fire({

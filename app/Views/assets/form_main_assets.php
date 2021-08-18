@@ -12,11 +12,8 @@
 <?= $this->section('form_js') ?>
 <script>
     $(document).ready(function() {
-        $("select").select2({
-            theme: "bootstrap4",
-            // placeholder: "Pilih",
-            // allowClear: true,
-        });
+        const select2TypeAsset = $('#type_asset');
+        select2TypeAsset.select2(configSelect2);
     })
 </script>
 <?= $this->endSection() ?>

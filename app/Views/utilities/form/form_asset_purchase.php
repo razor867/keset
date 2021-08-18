@@ -12,37 +12,11 @@
 <?= $this->section('form_js') ?>
 <script>
     $(document).ready(function() {
-        $("select").select2({
-            theme: "bootstrap4",
-            minimumInputLength: 3,
-            allowClear: true,
-            placeholder: 'Cari nama Asset',
-            ajax: {
-                url: base_url + '/utilities/get_ajax_asset',
-                type: "post",
-                dataType: "json",
-                delay: 250,
-                cache: false,
-                data: function(params) {
-                    return {
-                        q: params.term,
-                        page: params.page || 1,
-                    };
-                },
-                processResults: function(data, params) {
-                    return data;
-                },
-            },
-            language: {
-                searching: function() {
-                    return '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...';
-                },
-            },
-            escapeMarkup: function(markup) {
-                return markup;
-            },
-            tags: false,
-        });
+        const select2Asset = $('#asset_id');
+        let configSelectAsset = configSelect2Ajax;
+        configSelectAsset.ajax.url = base_url + '/utilities/get_ajax_asset';
+        configSelectAsset.placeholder = 'Cari nama asset';
+        select2Asset.select2(configSelectAsset);
     })
 </script>
 <?= $this->endSection() ?>

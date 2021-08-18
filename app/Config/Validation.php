@@ -176,4 +176,34 @@ class Validation
 			]
 		],
 	];
+
+	public $employees = [
+		'position_id' => [
+			'rules'  => 'required|numeric',
+			'errors' => [
+				'required' => 'Wajib diisi!',
+				'numeric' => 'Wajib angka',
+			]
+		],
+		'department_id' => [
+			'rules'  => 'required|numeric',
+			'errors' => [
+				'required' => 'Wajib diisi!',
+				'numeric' => 'Wajib angka',
+			]
+		],
+		'nip' => [
+			'rules'  => 'required|numeric',
+			'errors' => [
+				'required' => 'Wajib diisi!',
+				'numeric' => 'Wajib angka',
+			]
+		],
+		'name' => [
+			'rules'  => 'required|regex_match[/^[\w\s ,.()&\/]+$/]',
+			'errors' => [
+				'required' => 'Wajib diisi!',
+			]
+		],
+	];
 }

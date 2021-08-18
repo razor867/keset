@@ -17,6 +17,43 @@
     $(document).ready(function() {
         $('.swal2-container .select2-container').css('display', 'none');
     })
+    let configSelect2Ajax = {
+        theme: "bootstrap4",
+        minimumInputLength: 2,
+        allowClear: true,
+        placeholder: "",
+        ajax: {
+            url: "",
+            type: "post",
+            dataType: "json",
+            delay: 250,
+            cache: false,
+            data: function(params) {
+                return {
+                    q: params.term,
+                    page: params.page || 1,
+                };
+            },
+            processResults: function(data, params) {
+                return data;
+            },
+        },
+        language: {
+            searching: function() {
+                return '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...';
+            },
+        },
+        escapeMarkup: function(markup) {
+            return markup;
+        },
+        tags: false,
+    }
+    let configSelect2 = {
+        theme: "bootstrap4",
+        // minimumInputLength: 2,
+        // allowClear: true,
+        // placeholder: "",
+    }
 </script>
 <?= $this->endSection() ?>
 
